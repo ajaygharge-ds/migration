@@ -1,0 +1,192 @@
+@use "sass:math";
+
+//transition
+@mixin transition($property, $duration, $easing: linear) {
+  transition: $property $duration $easing;
+  -webkit-transition: $property $duration $easing;
+  -moz-transition: $property $duration $easing;
+}
+
+//opacity
+@mixin opacity($value) {
+  $IEValue: $value * 100;
+  opacity: $value;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $IEValue +
+    ")";
+  filter: alpha(opacity=$IEValue);
+}
+
+//background Opacity
+@mixin background-opacity($color, $opacity) {
+  background: rgba($color, $opacity);
+}
+
+//input-placeholder
+@mixin input-placeholder {
+  &.placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+//media query
+@mixin mq-below($breakpoint) {
+  @media only screen and (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin mq-between($lower, $upper) {
+  @media only screen and (min-width: $lower) and (max-width: $upper) {
+    @content;
+  }
+}
+
+@mixin mq-above($breakpoint) {
+  @media only screen and (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin orientation($direction) {
+  $orientation-landscape: "(orientation:landscape)";
+  $orientation-portrait: "(orientation:portrait)";
+
+  @if $direction ==landscape {
+    @media #{$orientation-landscape} {
+      @content;
+    }
+  }
+
+  @if $direction ==portrait {
+    @media #{$orientation-portrait} {
+      @content;
+    }
+  }
+}
+
+//font styles
+@mixin font-source(
+  $size: false,
+  $lh: false,
+  $weight: false,
+  $colour: false,
+  $tt: false
+) {
+  @if $size {
+    font-size: $size;
+  }
+
+  @if $colour {
+    color: $colour;
+  }
+
+  @if $weight {
+    font-weight: $weight;
+  }
+
+  @if $lh {
+    line-height: $lh;
+  }
+
+  @if $tt {
+    text-transform: $tt;
+  }
+}
+
+// Scroll bar - Custom
+@mixin scrollbars($size, $foreground-color, $background-color, $hover-color) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+    cursor: grab;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    cursor: grab;
+    border-radius: 5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    cursor: grab;
+    border-radius: 5rem;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $hover-color;
+    cursor: grab;
+    border-radius: 5rem;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+@mixin svg-icon($path, $height, $width) {
+  height: $height;
+  width: $width;
+  mask-image: url($path);
+  -webkit-mask-image: url($path);
+  background-size: cover;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+$html-font-size: 16px;
+@function stripUnit($value) {
+  @return $value / ($value * 0 + 1);
+}
+@function rem($pxValue) {
+  $value: stripUnit($pxValue) / stripUnit($html-font-size);
+  @return #{$value}rem;
+}
+
+// $html-font-size: 16px;
+// @function stripUnit($value) {
+//   @return $value / ($value * 0 + 1);
+// }
+// @function get-vw($pxValue) {
+//   $value: stripUnit($pxValue) / stripUnit($html-font-size);
+//   @return #{$value}rem;
+// }
+// @function get-vw($pxValue) {
+//   $value: stripUnit($pxValue) / stripUnit($html-font-size);
+//   @return unquote("calc(#{$value}rem)");
+//   // @return #{stripUnit($pxValue) / stripUnit($html-font-size)}rem;
+// }
+
+// $vw-viewport: 1440;
+// @function get-vw($font) {
+//   $vw-context: $vw-viewport * 0.01 * 1px;
+//   @return math.div($font, $vw-context) * 1vw;
+// }

@@ -1,0 +1,38 @@
+// bs-status
+
+.bs-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: rem(150px) 0 rem(60px);
+  @include mq-below($xs) {
+    padding: rem(100px) 0 rem(60px);
+  }
+  .image-wrap {
+    width: rem(180px);
+    margin-bottom: rem(28px);
+    @include mq-below($xs) {
+      width: rem(100px);
+      margin-bottom: rem(20px);
+    }
+  }
+  .title {
+    font-size: rem(34px);
+    line-height: rem(42px);
+    margin-bottom: rem(22px);
+    @include mq-below($xs) {
+      font-size: rem(20px);
+      line-height: rem(28px);
+      margin-bottom: rem(12px);
+    }
+  }
+  .desc {
+    font-size: rem(24px);
+    line-height: rem(32px);
+    @include mq-below($xs) {
+      font-size: rem(16px);
+      line-height: rem(24px);
+    }
+  }
+}

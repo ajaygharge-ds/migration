@@ -1,0 +1,40 @@
+/*
+Theme Name:   shelfradar-theme
+Template:     blankslate
+*/
+
+/*
+  @Author : DigitalSalt
+  @Project : Shelf Radar
+  @Dev : DigitalSalt Dev
+  @Date : 28/08/2025;
+*/
+
+/* config */
+
+@import "config/variables";
+@import "config/mixin";
+
+/* element */
+@import "elements/normalize";
+@import "elements/elements";
+
+/* common */
+@import "common/common";
+@import "common/btn.scss";
+
+/* base */
+@import "base/bs-header";
+@import "base/bs-section";
+@import "base/bs-banner";
+@import "base/bs-footer";
+@import "base/bs-marquee";
+@import "base/bs-modal";
+@import "base/bs-status";
+@import "base/bs-blogs-details";
+
+/* Module */
+@import "module/mod-img-desc";
+
+/* layout */
+@import "layout/lyt-main";

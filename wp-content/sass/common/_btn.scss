@@ -1,0 +1,37 @@
+// btn
+.btn {
+    font-size: rem(28px);
+    line-height: rem(28px);
+    color: var(--clr-black-7);
+    @include mq-below($xs){
+        font-size: rem(14px);
+        line-height: rem(14px); 
+    }
+    &.btn-solid{
+        font-size: rem(18px);
+        max-width: max-content;
+        width: 100%;
+        font-family: $font1;
+        font-weight: $font-bold;
+        padding: rem(6px) rem(20px);
+        border-radius: rem(40px);
+        text-transform: uppercase;
+        background-color: var(--clr-bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        position: relative;
+        transition: all .3s ease;
+        @include mq-below($xs) {
+        font-size: rem(12px);
+        padding: rem(12px) rem(20px);
+        border-radius: rem(36px);
+        margin-top: rem(16px);
+        }
+        &:hover{
+            color: var(--clr-white);
+            background-color: var(--clr-black-7);
+        }
+    }
+}

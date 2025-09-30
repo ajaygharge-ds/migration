@@ -1,0 +1,68 @@
+// bs-footer
+
+.bs-footer {
+  background-color: var(--clr-black-7);
+  color: var(--clr-white);
+  padding: rem(50px) 0 rem(60px) 0;
+  @include mq-below($xs) {
+    padding: rem(22px) 0 rem(30px);
+  }
+  .footer-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    @include mq-below($xs) {
+      gap: rem(32px);
+    }
+  }
+  .title{
+    font-size: rem(100px);
+    max-width: rem(473px);
+    width: 30%;
+    font-style: italic;
+    line-height: 80px;
+    @include mq-below($xs){
+      font-size: rem(50px);
+      max-width: rem(200px);
+      width: 100% ;
+      line-height: 40px;
+    }
+  }
+  .data-wrap{
+    @include mq-below($xs){
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .nav-title{
+    text-decoration: none;
+    font-size: rem(30px);
+    line-height: 80px;
+    @include mq-below($xs){
+      font-size: rem(20px);
+      line-height: 40px;
+    }
+  }
+  .nav-list{
+    display: flex;
+    flex-direction: column;
+    gap: rem(40px);
+    font-size: rem(30px);
+    @include mq-below($xs){
+      font-size: rem(20px);
+      gap: rem(15px);
+    }
+  }
+  .nav-items{
+    
+    &:hover{
+      text-decoration: underline;
+      text-decoration-skip-ink: none;
+      text-decoration-thickness: from-font;
+      text-underline-position: from-font;
+    }
+  }
+  
+}

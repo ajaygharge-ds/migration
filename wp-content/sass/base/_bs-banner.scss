@@ -1,0 +1,355 @@
+//bs-banner
+
+.bs-banner {
+  &.typ-home {
+    min-height: rem(600px);
+    height: 100vh;
+    max-height: rem(800px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: rem(34px);
+    position: relative;
+    @include mq-below($xs) {
+      max-height: initial;
+      height: 100%;
+      flex-direction: column;
+      padding: rem(100px) 0 rem(50px);
+      gap: rem(10px);
+    }
+    @media only screen and (min-width: 769px) and (max-width: 1025px) and (orientation: portrait) {
+      height: 70vh;
+      max-height: initial;
+    }
+    .info-wrap {
+      max-width: rem(664px);
+      width: 100%;
+      height: auto;
+      letter-spacing: 1px;
+      margin-bottom: rem(110px);
+      @include mq-below($xs) {
+        max-width: initial;
+        width: 100%;
+        text-align: center;
+        margin-bottom: rem(50px);
+      }
+    }
+    .title {
+      font-size: rem(60px);
+      font-style: italic;
+      line-height: rem(66px);
+      @include mq-below($xs) {
+        font-size: rem(30px);
+        line-height: rem(36px);
+      }
+    }
+    .desc {
+      font-size: rem(25px);
+      font-weight: $font-light;
+      font-family: $font1;
+      margin: rem(16px) 0 rem(24px) 0;
+      color: var(--clr-brown);
+      line-height: rem(30px);
+      @include mq-below($xs) {
+        font-size: rem(15px);
+        margin: rem(5px) 0;
+        line-height: rem(20px);
+      }
+    }
+    .btn {
+      max-width: max-content;
+      width: 100%;
+      text-decoration-line: underline;
+      text-decoration-style: solid;
+      margin-top: rem(30px);
+      display: block;
+      @include mq-below($xs) {
+        font-weight: $font-medium;
+        font-size: rem(16px);
+        margin: rem(15px) auto 0;
+      }
+    }
+    .infography {
+      max-width: rem(434px);
+      bottom: -7.5%;
+      position: absolute;
+      right: 0;
+      z-index: 5;
+      @include mq-below($xs) {
+        position: relative;
+        max-width: rem(400px);
+        width: 100%;
+        bottom: 0;
+      }
+      @include mq-below($xxs) {
+        max-width: initial;
+      }
+      @media only screen and (min-width: 769px) and (max-width: 1025px) and (orientation: portrait) {
+        position: relative;
+        max-width: rem(500px);
+      }
+    }
+    .float-wrap {
+      span {
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+      .top-left {
+        display: block;
+        width: rem(150px);
+        height: rem(108px);
+        z-index: 10;
+        top: rem(-16px);
+        position: absolute;
+        animation-delay: 0s;
+        img{
+          height:100%;
+          width:100%;
+        }
+        @include mq-below($xxs) {
+          width: rem(140px);
+          height: rem(98px);
+          left: 0;
+        }
+      }
+      .top-right {
+        display: block;
+        width: rem(95px);
+        height: rem(138px);
+        z-index: 10;
+        top: rem(-16px);
+        right: rem(32px);
+        position: absolute;
+        animation-delay: 0.5s;
+        img{
+          height:100%;
+          width:100%;
+        }
+        @include mq-below($xxs) {
+          right: rem(16px);
+        }
+      }
+      .mid-left {
+        display: block;
+        width: rem(124px);
+        height: rem(106px);
+        z-index: 10;
+        top: rem(220px);
+        left: rem(16px);
+        position: absolute;
+        animation-delay: 0s;
+        img{
+          height:100%;
+          width:100%;
+        }    
+      }
+      .mid-right {
+        display: block;
+        width: rem(108px);
+        height: rem(140px);
+        z-index: 10;
+        top: rem(240px);
+        right: rem(20px);
+        position: absolute;
+        animation-delay: 1.2s;
+        img{
+          height:100%;
+          width:100%;
+        }
+      }
+      .bottom-left {
+        display: block;
+        width: rem(134px);
+        height: rem(106px);
+        z-index: 10;
+        top: rem(340px);
+        left: rem(32px);
+        position: absolute;
+        animation-delay: 0.4s;
+        img{
+          height:100%;
+          width:100%;
+        }
+        @include mq-between($xs, $md) {
+          top: rem(390px);
+        }
+        @include mq-below($xs) {
+          left: 0;
+        }
+      }
+      .bottom-right {
+        display: block;
+        width: rem(142px);
+        height: rem(106px);
+        z-index: 10;
+        top: rem(380px);
+        right: rem(38px);
+        position: absolute;
+        animation-delay: 0.7s;
+        img{
+          height:100%;
+          width:100%;
+        }
+        @include mq-between($xs, $md) {
+          top: rem(410px);
+        }
+        @include mq-below($xs) {
+          right: rem(25px);
+        }
+      }
+    }
+    .counter-wrap {
+      display: inline-block;
+    }
+    .count-up {
+      width: rem(30px);
+      display: block;
+      text-align: right;
+      @include mq-below($xs) {
+        width: rem(20px);
+      }
+    }
+    .features {
+      display: flex;
+      gap: rem(10px);
+      position: absolute;
+      width: 100%;
+      bottom: rem(88px);
+      @include mq-below($xs) {
+        position: relative;
+        gap: rem(5px);
+        flex-wrap: wrap;
+        bottom: 0;
+      }
+    }
+    .features-items {
+      width: 100%;
+      padding: rem(16px) rem(24px);
+      font-size: rem(30px);
+      line-height: 1;
+      font-style: italic;
+      border-radius: rem(20px);
+      background-color: var(--clr-brown-bg-2);
+      z-index: 10;
+      text-align: center;
+      align-content: center;
+      @include mq-below($xs) {
+        width: 48%;
+        font-size: rem(25px);
+        padding: rem(12px) rem(25px);
+        border-radius: rem(20px);
+      }
+      @include mq-below($xxs) {
+        font-size: rem(15px);
+        padding: rem(20px) rem(15px);
+      }
+    }
+  }
+}
+
+.float-upDown {
+  animation-name: floatUpdown;
+}
+.float-upDownRev {
+  animation-name: floatUpdownRev;
+  animation-direction: reverse;
+}
+.float-circle {
+  animation-name: floatCircle;
+}
+.float-real {
+  animation-name: floatReal;
+}
+.float-realRev {
+  animation-name: floatRealRev;
+  //   animation-direction: reverse;
+}
+
+@keyframes floatUpdown {
+  0% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+  25% {
+    transform: translateY(3px) rotateY(10deg) rotate(2deg);
+  }
+  50% {
+    transform: translateY(6px) rotateY(0deg) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(6px) rotateY(10deg) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+}
+@keyframes floatUpdownRev {
+  0% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) translateX(-3px) rotateY(8deg) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-6px) translateX(-6px) rotateY(0deg) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-3px) translateX(-3px) rotateY(8deg) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+}
+
+@keyframes floatReal {
+  0% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+  25% {
+    transform: translateY(3px) rotateY(2deg) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-3px) rotateY(-1deg) rotate(2deg);
+  }
+  75% {
+    transform: translateY(3px) rotateY(2deg) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+}
+@keyframes floatRealRev {
+  0% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotateY(10deg) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotateY(-10deg) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-3px) rotateY(10deg) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(0deg) rotate(0deg);
+  }
+}
+
+@keyframes floatCircle {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(3px, 0) rotateY(-5deg) rotate(2deg);
+  }
+  50% {
+    transform: translate(0, -6px) rotateY(0deg) rotate(-2deg);
+  }
+  75% {
+    transform: translate(0, -3px) rotateY(5deg) rotate(2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}

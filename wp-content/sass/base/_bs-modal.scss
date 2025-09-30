@@ -1,0 +1,199 @@
+// bs-modal
+
+.bs-modal {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  overflow-x: hidden;
+  top: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+  z-index: 18;
+  background-color: var(--clr-body-bg);
+  .modal-body {
+    height: 100dvh;
+    width: 100vw;
+    position: relative;
+    &::before {
+      content: "";
+      background: url("../../themes/images/readblogbackground.png") no-repeat center center;
+      background-size: cover;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+  }
+  .cm-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 75%;
+     @media only screen and (min-width: 769px) and (max-width: $md) and (orientation: portrait) {
+      max-width: 90%;
+      justify-content: flex-end;
+      gap: 20%;
+    }
+    @media only screen and (min-width: 769px) and (max-width: $lg) and (orientation: landscape) {
+      max-width: 80%;
+    }
+    @include mq-below($xs) {
+      max-width: 100%;
+      width: 100%;
+      padding: 0;
+    }
+  }
+  .media-cont {
+    width: 100%;
+    overflow: hidden;
+    flex-grow: 1;
+    align-self: flex-start;
+    @media only screen and (min-width: $xs) and (max-width: $md) and (orientation: portrait) {
+      flex-grow: 0;
+    }
+    @include mq-below($xs) {
+      align-self: unset;
+      margin: 0;
+      gap: rem(6px);
+    }
+  }
+  .bs-swiper {
+    height: 100%;
+  }
+  .swiper-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3 , 1fr);
+    // gap:0;
+    @include mq-below($xs){
+      display: flex ;
+      height: 80vh;
+    }
+  }
+  .swiper-slide {
+    width: 100%;
+    @include mq-below($xs){
+      height: 100%;
+      width: 100% !important;
+    }
+  }
+  .img-wrap {
+    height: 100%;
+    width: 100%;
+    @include mq-below($xs){
+      height: 100%;
+      width: 100%;
+    }
+    img {
+      object-fit: cover;
+      height: 100%;
+      @include mq-below($xs){
+        height: 100%;
+        object-fit: fill;
+        width: 100%;
+      }
+      @include mq-below($xxs){
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  .info-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: rem(20px) rem(32px);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    @include mq-below($xs) {
+      max-width: initial;
+      padding: rem(16px) rem(20px) rem(20px);
+      text-align: center;
+      flex-grow: 1;
+    }
+    &::before {
+      content: "";
+      background: url("../../themes/images/popup-box.webp") no-repeat;
+      position: absolute;
+      background-size: cover;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.95;
+      @include mq-below($xs) {
+        background-position: center;
+        opacity: 1;
+      }
+    }
+    &::after {
+      content: "";
+      background: url("../../themes/images/popup-bg\ \(1\).webp") no-repeat;
+      position: absolute;
+      background-size: cover;
+      background-position: center center;
+      filter: blur(1px);
+      inset: 0;
+      z-index: -1;
+      opacity: 0.6;
+      border-radius: rem(25px);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      @include mq-below($xs) {
+        right: rem(-280px);
+      }
+    }
+  }
+
+  .quote-text {
+    font-size: rem(18px);
+    line-height: rem(22px);
+    font-weight: $font-bold;
+    margin: rem(10px) 0 rem(12px);
+    text-align: center;
+    background: linear-gradient(90deg, #45a5ff 0%, #21e1bb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    @include mq-below($xs) {
+      font-size: rem(14px);
+      line-height: rem(18px);
+      margin: rem(8px) 0;
+    }
+  }
+  .tagline {
+    font-size: rem(16px);
+    line-height: rem(20px);
+    font-weight: $font-regular;
+    color: #d2d2d2;
+    @include mq-below($xs) {
+      font-size: rem(12px);
+      line-height: rem(16px);
+    }
+    &.highlight {
+      font-size: rem(16px);
+      font-weight: $font-bold;
+      font-style: italic;
+      margin-top: rem(10px);
+      color: var(--clr-white);
+      @include mq-below($xs) {
+        font-size: rem(12px);
+        margin-top: rem(6px);
+      }
+    }
+  }
+  .cta-wrap {
+    margin-top: rem(16px);
+    @include mq-below($xs) {
+      margin-top: rem(12px);
+    }
+  }
+  .btn-solid {
+    box-shadow: 0 0 0 transparent;
+    &:hover {
+      background: linear-gradient(84.6deg, #3dc777 1.99%, #ade65d 99.4%);
+      box-shadow: 0 6px 12px rgba(61, 199, 119, 0.4);
+      transform: translateY(-2px);
+    }
+  }
+}
