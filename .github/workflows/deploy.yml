@@ -14,7 +14,7 @@ jobs:
       - name: Deploy files via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ftp.navajowhite-stinkbug-880694.hostingersite.com
+          server: ftp://217.21.91.17
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: wp-content/
