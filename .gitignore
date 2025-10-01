@@ -9,7 +9,7 @@ Thumbs.db
 # ───────────────
 wp-admin/
 wp-includes/
-index.php
+# index.php
 license.txt
 readme.html
 
@@ -21,7 +21,7 @@ wp-content/debug.log
 wp-content/ai1wm-backups/*
 
 # Uploads (media should not be tracked in Git)
-wp-content/uploads/
+# wp-content/uploads/
 
 # Cache (plugin-generated)
 wp-content/cache/
@@ -36,7 +36,7 @@ wp-content/.DS_Store
 wp-content/themes/**/.DS_Store
 
 # Ignore compiled assets (CSS/Maps) if you build from SCSS/JS
-wp-content/themes/shelfradar-theme/style.css
+# wp-content/themes/shelfradar-theme/style.css
 wp-content/themes/shelfradar-theme/style.css.map
 
 # Optional: ignore ALL compiled assets in your theme
@@ -52,7 +52,6 @@ wp-content/plugins/**/.DS_Store
 
 # Optional: ignore third-party plugins (if installed via WP or Composer)
 # Keep only your custom plugins in version control
-# wp-content/plugins/*
 
 # ───────────────
 # Config / Secrets
