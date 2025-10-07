@@ -8,9 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # IMPORTANT: ensures full history for diff
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
@@ -19,11 +22,18 @@ jobs:
 
       - name: Prepare list of changed files
         run: |
-          git fetch origin development
-          git diff --name-only origin/development | grep '^wp-content/' > changed-files.txt
-          cat changed-files.txt
+          # Ensure branch is tracked properly
+          git fetch origin main
+          git checkout main
+
+          # Get the previous commit on remote for diff comparison
+          git diff --name-only HEAD^ HEAD | grep '^wp-content/' > changed-files.txt || true
+
+          echo "Changed files:"
+          cat changed-files.txt || echo "No changed wp-content files found."
 
       - name: Deploy only changed wp-content files
+        if: success() && steps.changed-files.outputs.files != ''
         run: |
           rsync -avz --files-from=changed-files.txt \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
