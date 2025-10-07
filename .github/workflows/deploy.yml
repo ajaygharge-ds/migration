@@ -17,24 +17,15 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy wp-content with rsync
+      - name: Prepare list of changed files
         run: |
-          rsync -avz --delete \
+          git fetch origin main
+          git diff --name-only origin/main | grep '^wp-content/' > changed-files.txt
+          cat changed-files.txt
+
+      - name: Deploy only changed wp-content files
+        run: |
+          rsync -avz --files-from=changed-files.txt \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            wp-content/ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/wp-content/
-
-      - name: Push database changes to live
-        run: |
-          # Export local DB (you need to generate this before pushing to GitHub)
-          # Example: wp db export db-dump.sql --path=path/to/wordpress
-
-          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            db-dump.sql \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/db-dump.sql
-
-          ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            cd /home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html &&
-            wp db import /home/${{ secrets.SSH_USER }}/db-dump.sql &&
-            wp cache flush
-          "
+            ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
