@@ -19,8 +19,8 @@ jobs:
 
       - name: Prepare list of changed files
         run: |
-          git fetch origin main
-          git diff --name-only origin/main | grep '^wp-content/' > changed-files.txt
+          git fetch origin development
+          git diff --name-only origin/development | grep '^wp-content/' > changed-files.txt
           cat changed-files.txt
 
       - name: Deploy only changed wp-content files
