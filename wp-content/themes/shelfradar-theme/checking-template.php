@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: New
+ * Template Name: Checking
  */ ?>
  <?php get_header();
         $banner = get_field('title');

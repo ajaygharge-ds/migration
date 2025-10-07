@@ -13,28 +13,45 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # IMPORTANT: ensures full history for diff
+          fetch-depth: 0 # Full history for diff
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Prepare list of changed files
+      - name: Prepare lists of changed and deleted files
         run: |
-          # Ensure branch is tracked properly
           git fetch origin main
           git checkout main
 
-          # Get the previous commit on remote for diff comparison
-          git diff --name-only HEAD^ HEAD | grep '^wp-content/' > changed-files.txt || true
-
+          # Added or modified files
+          git diff --name-only --diff-filter=AM HEAD^ HEAD | grep '^wp-content/' > changed-files.txt || true
           echo "Changed files:"
           cat changed-files.txt || echo "No changed wp-content files found."
 
-      - name: Deploy only changed wp-content files
+          # Deleted files
+          git diff --name-only --diff-filter=D HEAD^ HEAD | grep '^wp-content/' > deleted-files.txt || true
+          echo "Deleted files:"
+          cat deleted-files.txt || echo "No deleted wp-content files found."
+
+      - name: Deploy added/modified files
         run: |
-          rsync -avz --files-from=changed-files.txt \
-            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
+          if [ -s changed-files.txt ]; then
+            rsync -avz --files-from=changed-files.txt \
+              -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
+              ./ \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
+          else
+            echo "No changed files to upload."
+          fi
+
+      - name: Remove deleted files from server
+        run: |
+          if [ -s deleted-files.txt ]; then
+            ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+              xargs -d '\n' -a deleted-files.txt rm -f \
+            "
+          else
+            echo "No deleted files to remove."
+          fi
