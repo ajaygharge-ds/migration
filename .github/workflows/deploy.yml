@@ -8,34 +8,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # IMPORTANT: ensures full history for diff
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Prepare list of changed files
+      - name: Deploy wp-content with rsync
         run: |
-          # Ensure branch is tracked properly
-          git fetch origin main
-          git checkout main
-
-          # Get the previous commit on remote for diff comparison
-          git diff --name-only HEAD^ HEAD | grep '^wp-content/' > changed-files.txt || true
-
-          echo "Changed files:"
-          cat changed-files.txt || echo "No changed wp-content files found."
-
-      - name: Deploy only changed wp-content files
-        if: success() && steps.changed-files.outputs.files != ''
-        run: |
-          rsync -avz --files-from=changed-files.txt \
+          rsync -avz \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
+            wp-content/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/wp-content/
