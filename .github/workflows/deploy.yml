@@ -31,7 +31,6 @@ jobs:
           echo "files=$(cat changed-files.txt | xargs)" >> $GITHUB_OUTPUT
 
       - name: Deploy only changed wp-content files
-        if: ${{ steps.changed-files.outputs.files != '' }}
         run: |
           echo "Deploying changed files to server..."
           rsync -avz --files-from=changed-files.txt \
