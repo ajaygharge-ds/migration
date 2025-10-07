@@ -8,32 +8,33 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # ensures full history for diff
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Prepare list of changed files
-        id: changed-files
+      - name: Deploy wp-content with rsync
         run: |
-          git fetch origin main
-          git diff --name-only origin/main...HEAD | grep '^wp-content/' > changed-files.txt || true
-
-          echo "Changed files:"
-          cat changed-files.txt || echo "No changed wp-content files found."
-          echo "files=$(cat changed-files.txt | xargs)" >> $GITHUB_OUTPUT
-
-      - name: Deploy only changed wp-content files
-        run: |
-          echo "Deploying changed files to server..."
-          rsync -avz --files-from=changed-files.txt \
+          rsync -avz \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
+            wp-content/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/wp-content/
+
+      - name: Push database changes to live
+        run: |
+          # Export local DB (you need to generate this before pushing to GitHub)
+          # Example: wp db export db-dump.sql --path=path/to/wordpress
+
+          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
+            db-dump.sql \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/db-dump.sql
+
+          ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd /home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html &&
+            wp db import /home/${{ secrets.SSH_USER }}/db-dump.sql &&
+            wp cache flush
+          "
