@@ -72,7 +72,14 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "test-template.php"
+                "value": "new-template.php"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "updated-template.php"
             }
         ]
     ],
@@ -85,5 +92,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759759194
+    "modified": 1759826879
 }
