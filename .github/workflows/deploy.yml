@@ -20,7 +20,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Prepare list of changed wp-content files
+      - name: Prepare list of changed files
         id: changed-files
         run: |
           git fetch origin main
@@ -30,15 +30,10 @@ jobs:
           cat changed-files.txt || echo "No changed wp-content files found."
           echo "files=$(cat changed-files.txt | xargs)" >> $GITHUB_OUTPUT
 
-      - name: Deploy wp-content to Hostinger
+      - name: Deploy only changed wp-content files
         run: |
-          echo "Deploying changed wp-content files to server..."
-
-          # Ensure the remote directory exists
-          ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/wp-content/"
-
-          # Sync files with delete option to remove deleted files
-          rsync -avz --delete --relative --files-from=changed-files.txt \
+          echo "Deploying changed files to server..."
+          rsync -avz --files-from=changed-files.txt \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
             ./ \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/domains/navajowhite-stinkbug-880694.hostingersite.com/public_html/
